@@ -1,0 +1,18 @@
+<!-- index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("head", {title: title}) %>
+  <body>
+    <%- include("header", {title: title}) %>
+    <main>
+      <h1><%= h1 %></h1>
+      <a href="/new">New Message</a>
+      <div class="messages">
+        <% messages.forEach(msg => {%>
+          <%- include("message", {msg: msg}) %>
+        <% }) %>
+      </div>
+    </main>
+    <%- include("footer") %>
+  </body>
+</html>
