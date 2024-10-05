@@ -101,6 +101,12 @@ main a {
   border-radius: 10px;
 }
 
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .message {
   display: flex;
   justify-content: left;
