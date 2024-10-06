@@ -2,17 +2,8 @@ import express from "express";
 import dotEnv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import db from "./db/queries.mjs";
 
-// The model: Message
-const Message = (title, text, author) => {
-  return { title, text, author, dt: new Date() };
-};
-
-// The data: messages, and add some initial messages
-let messages = [];
-
-messages.push(Message("Hello", "Hello there", "Tommi"));
-messages.push(Message("Hi", "Hi there", "Mike"));
 
 // Set up the express app
 const app = express();
@@ -26,7 +17,8 @@ const assetsPath = path.join(__dirname, "public");
 app.use(express.static(assetsPath));
 
 // Get routers for / and /new
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  const messages = await db.query();
   res.render("index", {
     title: "Fancy Message Board",
     h1: "Messages",
@@ -45,8 +37,8 @@ app.get("/new", (req, res) => {
 app.use(express.urlencoded({ extended: true }));
 
 // Post route for /new
-app.post("/new", (req, res) => {
-  messages.push(Message(req.body.title, req.body.text, req.body.author));
+app.post("/new", async (req, res) => {
+  await db.insert(req.body.title, req.body.text, req.body.author);
   res.redirect("/");
 });
 
