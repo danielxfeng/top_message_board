@@ -3,5 +3,12 @@
   <h3><%= msg.title %></h3>
   <p class="text"><%= msg.text %></p>
   <p class="author"><%= msg.author %></p>
-  <p class="datetime"><%= msg.dt.toLocaleString() %></p>
+  <p class="datetime" data-datetime="<%= msg.dt %>"></p>
 </div>
+<script>
+  document.querySelectorAll('.datetime').forEach(function(element) {
+    const utcDate = element.getAttribute('data-datetime');
+    const localDate = new Date(utcDate + ' UTC').toLocaleString();
+    element.textContent = localDate;
+  });
+</script>
