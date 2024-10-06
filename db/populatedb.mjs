@@ -7,12 +7,13 @@ dotenv.config();
 const { Client } = pgs;
 
 const SQL = `
+DROP TABLE IF EXISTS miniboard;
 CREATE TABLE IF NOT EXISTS miniboard (
   id SERIAL PRIMARY KEY,
   title VARCHAR ( 255 ),
   text VARCHAR ( 255 ),
   author VARCHAR ( 255 ),
-  dt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  dt TIMESTAMP DEFAULT (now() AT TIME ZONE 'UTC')
 );
 
 INSERT INTO miniboard (title, text, author)
